@@ -30,7 +30,7 @@ export const useStore = defineStore("main", {
         name: "King",
       },
       {
-        id: "c1",
+        id: "d8",
         color: "black",
         img: "./assets/img/BlackBishop.png",
         name: "Bishop",

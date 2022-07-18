@@ -221,15 +221,13 @@ export default {
   methods: {
     assignPieces(pieces) {
       let board = this.getBoard();
-      console.log(pieces);
-      console.log(board);
       pieces.forEach((element) => {
-        console.log(element);
+        let img = document.createElement("img");
+        img.src = element.img;
+        img.width = "30";
+        let div = board[element.id];
+        div.appendChild(img);
       });
-      let img = document.createElement("img");
-      img.src = "assets/img/WhitePawn.png";
-      img.width = "30";
-      // div.appendChild(img);
     },
     getBoard() {
       let board = {};
