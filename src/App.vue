@@ -2,210 +2,211 @@
   <div ref="app">
     <div class="chess-table">
       <div class="row">
-        <div ref="a1" class="piece-box black-box">
+        <div ref="a1" class="piece-box black-box" @click="act('a1')" @mouseover="select('a1')">
           <span class="piece-box-text">a1</span>
+          <img src="" width="35" />
         </div>
-        <div ref="b1" class="piece-box white-box">
+        <div ref="b1" class="piece-box white-box" @click="act('b1')" @mouseover="select('b1')">
           <span class="piece-box-text">b1</span>
         </div>
-        <div ref="c1" class="piece-box black-box">
+        <div ref="c1" class="piece-box black-box" @click="act('c1')" @mouseover="select('a1')">
           <span class="piece-box-text">c1</span>
         </div>
-        <div ref="d1" class="piece-box white-box">
+        <div ref="d1" class="piece-box white-box" @click="act('d1')" @mouseover="select('a1')">
           <span class="piece-box-text">d1</span>
         </div>
-        <div ref="e1" class="piece-box black-box">
+        <div ref="e1" class="piece-box black-box" @click="act('e1')" @mouseover="select('a1')">
           <span class="piece-box-text">e1</span>
         </div>
-        <div ref="f1" class="piece-box white-box">
+        <div ref="f1" class="piece-box white-box" @click="act('f1')" @mouseover="select('a1')">
           <span class="piece-box-text">f1</span>
         </div>
-        <div ref="g1" class="piece-box black-box">
+        <div ref="g1" class="piece-box black-box" @click="act('g1')" @mouseover="select('a1')">
           <span class="piece-box-text">g1</span>
         </div>
-        <div ref="h1" class="piece-box white-box">
+        <div ref="h1" class="piece-box white-box" @click="act('h1')" @mouseover="select('a1')">
           <span class="piece-box-text">h1</span>
         </div>
       </div>
       <div class="row">
-        <div ref="a2" class="piece-box white-box">
+        <div ref="a2" class="piece-box white-box" @click="act('a2')" @mouseover="select('a1')">
           <span class="piece-box-text">a2</span>
         </div>
-        <div ref="b2" class="piece-box black-box">
+        <div ref="b2" class="piece-box black-box" @click="act('b2')" @mouseover="select('a1')">
           <span class="piece-box-text">b2</span>
         </div>
-        <div ref="c2" class="piece-box white-box">
+        <div ref="c2" class="piece-box white-box" @click="act('c2')" @mouseover="select('a1')">
           <span class="piece-box-text">c2</span>
         </div>
-        <div ref="d2" class="piece-box black-box">
+        <div ref="d2" class="piece-box black-box" @click="act('d2')" @mouseover="select('a1')">
           <span class="piece-box-text">d2</span>
         </div>
-        <div ref="e2" class="piece-box white-box">
+        <div ref="e2" class="piece-box white-box" @click="act('e2')" @mouseover="select('a1')">
           <span class="piece-box-text">e2</span>
         </div>
-        <div ref="f2" class="piece-box black-box">
+        <div ref="f2" class="piece-box black-box" @click="act('f2')" @mouseover="select('a1')">
           <span class="piece-box-text">f2</span>
         </div>
-        <div ref="g2" class="piece-box white-box">
+        <div ref="g2" class="piece-box white-box" @click="act('g2')" @mouseover="select('a1')">
           <span class="piece-box-text">g2</span>
         </div>
-        <div ref="h2" class="piece-box black-box">
+        <div ref="h2" class="piece-box black-box" @click="act('h2')" @mouseover="select('a1')">
           <span class="piece-box-text">h2</span>
         </div>
       </div>
       <div class="row">
-        <div ref="a3" class="piece-box black-box">
+        <div ref="a3" class="piece-box black-box" @click="act('a3')" @mouseover="select('a1')">
           <span class="piece-box-text">a3</span>
         </div>
-        <div ref="b3" class="piece-box white-box">
+        <div ref="b3" class="piece-box white-box" @click="act('b3')" @mouseover="select('a1')">
           <span class="piece-box-text">b3</span>
         </div>
-        <div ref="c3" class="piece-box black-box">
+        <div ref="c3" class="piece-box black-box" @click="act('c3')" @mouseover="select('a1')">
           <span class="piece-box-text">c3</span>
         </div>
-        <div ref="d3" class="piece-box white-box">
+        <div ref="d3" class="piece-box white-box" @click="act('d3')" @mouseover="select('a1')">
           <span class="piece-box-text">d3</span>
         </div>
-        <div ref="e3" class="piece-box black-box">
+        <div ref="e3" class="piece-box black-box" @click="act('e3')" @mouseover="select('a1')">
           <span class="piece-box-text">e3</span>
         </div>
-        <div ref="f3" class="piece-box white-box">
+        <div ref="f3" class="piece-box white-box" @click="act('f3')" @mouseover="select('a1')">
           <span class="piece-box-text">f3</span>
         </div>
-        <div ref="g3" class="piece-box black-box">
+        <div ref="g3" class="piece-box black-box" @click="act('g3')" @mouseover="select('a1')">
           <span class="piece-box-text">g3</span>
         </div>
-        <div ref="h3" class="piece-box white-box">
+        <div ref="h3" class="piece-box white-box" @click="act('h3')" @mouseover="select('a1')">
           <span class="piece-box-text">h3</span>
         </div>
       </div>
       <div class="row">
-        <div ref="a4" class="piece-box white-box">
+        <div ref="a4" class="piece-box white-box" @click="act('a4')" @mouseover="select('a1')">
           <span class="piece-box-text">a4</span>
         </div>
-        <div ref="b4" class="piece-box black-box">
+        <div ref="b4" class="piece-box black-box" @click="act('b4')" @mouseover="select('a1')">
           <span class="piece-box-text">b4</span>
         </div>
-        <div ref="c4" class="piece-box white-box">
+        <div ref="c4" class="piece-box white-box" @click="act('c4')" @mouseover="select('a1')">
           <span class="piece-box-text">c4</span>
         </div>
-        <div ref="d4" class="piece-box black-box">
+        <div ref="d4" class="piece-box black-box" @click="act('d4')" @mouseover="select('a1')">
           <span class="piece-box-text">d4</span>
         </div>
-        <div ref="e4" class="piece-box white-box">
+        <div ref="e4" class="piece-box white-box" @click="act('e4')" @mouseover="select('a1')">
           <span class="piece-box-text">e4</span>
         </div>
-        <div ref="f4" class="piece-box black-box">
+        <div ref="f4" class="piece-box black-box" @click="act('f4')" @mouseover="select('a1')">
           <span class="piece-box-text">f4</span>
         </div>
-        <div ref="g4" class="piece-box white-box">
+        <div ref="g4" class="piece-box white-box" @click="act('g4')" @mouseover="select('a1')">
           <span class="piece-box-text">g4</span>
         </div>
-        <div ref="h4" class="piece-box black-box">
+        <div ref="h4" class="piece-box black-box" @click="act('h4')" @mouseover="select('a1')">
           <span class="piece-box-text">h4</span>
         </div>
       </div>
       <div class="row">
-        <div ref="a5" class="piece-box black-box">
+        <div ref="a5" class="piece-box black-box" @click="act('a5')" @mouseover="select('a1')">
           <span class="piece-box-text">a5</span>
         </div>
-        <div ref="b5" class="piece-box white-box">
+        <div ref="b5" class="piece-box white-box" @click="act('b5')" @mouseover="select('a1')">
           <span class="piece-box-text">b5</span>
         </div>
-        <div ref="c5" class="piece-box black-box">
+        <div ref="c5" class="piece-box black-box" @click="act('c5')" @mouseover="select('a1')">
           <span class="piece-box-text">c5</span>
         </div>
-        <div ref="d5" class="piece-box white-box">
+        <div ref="d5" class="piece-box white-box" @click="act('d5')" @mouseover="select('a1')">
           <span class="piece-box-text">d5</span>
         </div>
-        <div ref="e5" class="piece-box black-box">
+        <div ref="e5" class="piece-box black-box" @click="act('e5')" @mouseover="select('a1')">
           <span class="piece-box-text">e5</span>
         </div>
-        <div ref="f5" class="piece-box white-box">
+        <div ref="f5" class="piece-box white-box" @click="act('f5')" @mouseover="select('a1')">
           <span class="piece-box-text">f5</span>
         </div>
-        <div ref="g5" class="piece-box black-box">
+        <div ref="g5" class="piece-box black-box" @click="act('g5')" @mouseover="select('a1')">
           <span class="piece-box-text">g5</span>
         </div>
-        <div ref="h5" class="piece-box white-box">
+        <div ref="h5" class="piece-box white-box" @click="act('h5')" @mouseover="select('a1')">
           <span class="piece-box-text">h5</span>
         </div>
       </div>
       <div class="row">
-        <div ref="a6" class="piece-box white-box">
+        <div ref="a6" class="piece-box white-box" @click="act('a6')" @mouseover="select('a1')">
           <span class="piece-box-text">a6</span>
         </div>
-        <div ref="b6" class="piece-box black-box">
+        <div ref="b6" class="piece-box black-box" @click="act('b6')" @mouseover="select('a1')">
           <span class="piece-box-text">b6</span>
         </div>
-        <div ref="c6" class="piece-box white-box">
+        <div ref="c6" class="piece-box white-box" @click="act('c6')" @mouseover="select('a1')">
           <span class="piece-box-text">c6</span>
         </div>
-        <div ref="d6" class="piece-box black-box">
+        <div ref="d6" class="piece-box black-box" @click="act('d6')" @mouseover="select('a1')">
           <span class="piece-box-text">d6</span>
         </div>
-        <div ref="e6" class="piece-box white-box">
+        <div ref="e6" class="piece-box white-box" @click="act('e6')" @mouseover="select('a1')">
           <span class="piece-box-text">e6</span>
         </div>
-        <div ref="f6" class="piece-box black-box">
+        <div ref="f6" class="piece-box black-box" @click="act('f6')" @mouseover="select('a1')">
           <span class="piece-box-text">f6</span>
         </div>
-        <div ref="g6" class="piece-box white-box">
+        <div ref="g6" class="piece-box white-box" @click="act('g6')" @mouseover="select('a1')">
           <span class="piece-box-text">g6</span>
         </div>
-        <div ref="h6" class="piece-box black-box">
+        <div ref="h6" class="piece-box black-box" @click="act('h6')" @mouseover="select('a1')">
           <span class="piece-box-text">h6</span>
         </div>
       </div>
       <div class="row">
-        <div ref="a7" class="piece-box black-box">
+        <div ref="a7" class="piece-box black-box" @click="act('a7')" @mouseover="select('a1')">
           <span class="piece-box-text">a7</span>
         </div>
-        <div ref="b7" class="piece-box white-box">
+        <div ref="b7" class="piece-box white-box" @click="act('b7')" @mouseover="select('a1')">
           <span class="piece-box-text">b7</span>
         </div>
-        <div ref="c7" class="piece-box black-box">
+        <div ref="c7" class="piece-box black-box" @click="act('c7')" @mouseover="select('a1')">
           <span class="piece-box-text">c7</span>
         </div>
-        <div ref="d7" class="piece-box white-box">
+        <div ref="d7" class="piece-box white-box" @click="act('d7')" @mouseover="select('a1')">
           <span class="piece-box-text">d7</span>
         </div>
-        <div ref="e7" class="piece-box black-box">
+        <div ref="e7" class="piece-box black-box" @click="act('e7')" @mouseover="select('a1')">
           <span class="piece-box-text">e7</span>
         </div>
-        <div ref="f7" class="piece-box white-box">
+        <div ref="f7" class="piece-box white-box" @click="act('f7')" @mouseover="select('a1')">
           <span class="piece-box-text">f7</span>
         </div>
-        <div ref="g7" class="piece-box black-box">
+        <div ref="g7" class="piece-box black-box" @click="act('g7')" @mouseover="select('a1')">
           <span class="piece-box-text">g7</span>
         </div>
-        <div ref="h7" class="piece-box white-box">
+        <div ref="h7" class="piece-box white-box" @click="act('h7')" @mouseover="select('a1')">
           <span class="piece-box-text">h7</span>
         </div>
       </div>
       <div class="row">
-        <div ref="a8" class="piece-box white-box">
+        <div ref="a8" class="piece-box white-box" @click="act('a8')" @mouseover="select('a1')">
           <span class="piece-box-text">a8</span>
         </div>
-        <div ref="b8" class="piece-box black-box">
+        <div ref="b8" class="piece-box black-box" @click="act('b8')" @mouseover="select('a1')">
           <span class="piece-box-text">b8</span>
         </div>
-        <div ref="c8" class="piece-box white-box">
+        <div ref="c8" class="piece-box white-box" @click="act('c8')" @mouseover="select('a1')">
           <span class="piece-box-text">c8</span>
         </div>
-        <div ref="d8" class="piece-box black-box">
+        <div ref="d8" class="piece-box black-box" @click="act('d8')" @mouseover="select('a1')">
           <span class="piece-box-text">d8</span>
         </div>
-        <div ref="e8" class="piece-box white-box">
+        <div ref="e8" class="piece-box white-box" @click="act('e8')" @mouseover="select('a1')">
           <span class="piece-box-text">e8</span>
         </div>
-        <div ref="f8" class="piece-box black-box">
+        <div ref="f8" class="piece-box black-box" @click="act('f8')" @mouseover="select('a1')">
           <span class="piece-box-text">f8</span>
         </div>
-        <div ref="g8" class="piece-box white-box">
+        <div ref="g8" class="piece-box white-box" @click="act('g8')" @mouseover="select('a1')">
           <span class="piece-box-text">g8</span>
         </div>
-        <div ref="h8" class="piece-box black-box">
+        <div ref="h8" class="piece-box black-box" @click="act('h8')" @mouseover="select('a1')">
           <span class="piece-box-text">h8</span>
         </div>
       </div>
@@ -219,6 +220,12 @@ import { mapStores } from "pinia";
 export default {
   name: "App",
   methods: {
+    select (id) {
+      console.log(id);
+     },
+    act(id) {
+      console.log(id);
+    },
     assignPieces(pieces) {
       let board = this.getBoard();
       pieces.forEach((element) => {
