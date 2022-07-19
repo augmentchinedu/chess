@@ -2,20 +2,7 @@ import { defineStore } from "pinia";
 
 export const useStore = defineStore("main", {
   state: () => ({
-    pieceImages: {
-      white_pawn: "./assets/img/WhitePawn.png",
-      white_rook: "./assets/img/WhiteRook.png",
-      white_knight: "./assets/img/WhiteKnight.png",
-      white_bishop: "./assets/img/WhiteBishop.png",
-      white_king: "./assets/img/WhiteKing.png",
-      white_queen: "./assets/img/WhiteQueen.png",
-      black_pawn: "./assets/img/BlackPawn.png",
-      black_rook: "./assets/img/BlackRook.png",
-      black_knight: "./assets/img/BlackKnight.png",
-      black_bishop: "./assets/img/BlackBishop.png",
-      black_king: "./assets/img/BlackKing.png",
-      black_queen: "./assets/img/BlackQueen.png",
-    },
+    board: {},
     pieces: [
       {
         id: "a8",
@@ -211,4 +198,49 @@ export const useStore = defineStore("main", {
       },
     ],
   }),
+  actions: {
+    select(id) {
+      let board = this.board;
+      let pieces = [];
+      if (this.player == "white") {
+        this.pieces.forEach((element) => {
+          if (element.color == "white") pieces.push(element.id);
+        });
+        let piece = pieces.find((element) => element == id);
+        if (piece) board[id].classList.add("moveover", "cursor");
+      } else {
+        this.pieces.forEach((element) => {
+          if (element.color == "black") pieces.push(element.id);
+        });
+        let piece = pieces.find((element) => element == id);
+        if (piece) board[id].classList.add("moveover", "cursor");
+      }
+    },
+    deselect(id) {
+      let board = this.board;
+      board[id].classList.remove("moveover");
+    },
+
+    updateBoard() {
+      let board = this.board;
+      for (let key in board) {
+        let element = board[key];
+        if (element.childNodes.length > 1) {
+          element.removeChild(element.childNodes[1]);
+        }
+      }
+      this.pieces.forEach((element) => {
+        let img = document.createElement("img");
+        img.src = element.img;
+        img.width = "30";
+        let div = this.board[element.id];
+        div.appendChild(img);
+      });
+    },
+    createBoard(refs) {
+      let result = Object.keys(refs).map((key) => [key, refs[key]]);
+      result = result.filter((element) => element[0] != "app");
+      result.forEach((element) => (this.board[element[0]] = element[1]));
+    },
+  },
 });

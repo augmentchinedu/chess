@@ -10,7 +10,6 @@
           @mouseleave="deselect('a1')"
         >
           <span class="piece-box-text">a1</span>
-          <img src="" width="35" />
         </div>
         <div
           ref="b1"
@@ -587,7 +586,7 @@
         <div
           ref="h8"
           class="piece-box black-box"
-          @click="act('h8')"
+          @click="updateBoard('h8')"
           @mouseleave="deselect('h8')"
           @mouseover="select('h8')"
         >
@@ -600,7 +599,7 @@
 
 <script>
 import { useStore } from "./store";
-import { mapStores } from "pinia";
+import { mapActions, mapStores } from "pinia";
 export default {
   name: "App",
   data() {
@@ -609,217 +608,61 @@ export default {
     };
   },
   methods: {
-    deselect(id) {
-      let board = this.getBoard();
-      board[id].classList.remove("moveover");
-    },
-    select(id) {
-      let board = this.getBoard();
-        let pieces = [];
-      if (this.player == "white") {
-        this.mainStore.pieces.forEach((element) => {
-          if (element.color == "white") pieces.push(element.id);
-        });
-        let piece = pieces.find((element) => element == id);
-        if (piece) board[id].classList.add("moveover", "cursor");
-      } else {
-        this.mainStore.pieces.forEach((element) => {
-          if (element.color == "black") pieces.push(element.id);
-        });
-        let piece = pieces.find((element) => element == id);
-        if (piece) board[id].classList.add("moveover", "cursor");
-        
-      }
-    },
+    ...mapActions(useStore, ["updateBoard", "select", "deselect"]),
+    // deselect(id) {
+    //   let board = this.getBoard();
+    //   board[id].classList.remove("moveover");
+    // },
+    // select(id) {
+    //   let board = this.getBoard();
+    //   let pieces = [];
+    //   if (this.player == "white") {
+    //     this.mainStore.pieces.forEach((element) => {
+    //       if (element.color == "white") pieces.push(element.id);
+    //     });
+    //     let piece = pieces.find((element) => element == id);
+    //     if (piece) board[id].classList.add("moveover", "cursor");
+    //   } else {
+    //     this.mainStore.pieces.forEach((element) => {
+    //       if (element.color == "black") pieces.push(element.id);
+    //     });
+    //     let piece = pieces.find((element) => element == id);
+    //     if (piece) board[id].classList.add("moveover", "cursor");
+    //   }
+    // },
     act(id) {
       console.log(id);
     },
-    assignPieces(pieces) {
-      let board = this.getBoard();
-      pieces.forEach((element) => {
-        let img = document.createElement("img");
-        img.src = element.img;
-        img.width = "30";
-        let div = board[element.id];
-        div.appendChild(img);
-      });
-    },
-    getBoard() {
-      let board = {};
-      let refs = this.$refs;
-      let result = Object.keys(refs).map((key) => [key, refs[key]]);
-      result = result.filter((element) => element[0] != "app");
-      result.forEach((element) => (board[element[0]] = element[1]));
-      return board;
-    },
+    // assignPieces(pieces) {
+    //   let board = this.getBoard();
+    //   pieces.forEach((element) => {
+    //     let img = document.createElement("img");
+    //     img.src = element.img;
+    //     img.width = "30";
+    //     let div = board[element.id];
+    //     div.appendChild(img);
+    //   });
+    // },
+    // getBoard() {
+    //   let board = {};
+    //   let refs = this.$refs;
+    //   let result = Object.keys(refs).map((key) => [key, refs[key]]);
+    //   result = result.filter((element) => element[0] != "app");
+    //   result.forEach((element) => (board[element[0]] = element[1]));
+    //   return board;
+    // },
   },
   computed: {
     ...mapStores(useStore),
   },
   mounted() {
-    console.log(this.$refs);
-    console.log(this.mainStore.pieces);
-    let pieces = this.mainStore.pieces;
-    this.assignPieces(pieces);
+    this.mainStore.createBoard(this.$refs);
+    this.mainStore.updateBoard();
   },
 };
 </script>
 
 <style>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css");
-
-* {
-  user-select: none;
-}
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background: #312e2b;
-  margin: 0;
-  padding: 0;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.fade-in {
-  animation: fadeIn 1s ease;
-}
-
-/** ####################################### */
-
-.chess-table {
-  height: 400px;
-  width: 400px;
-  /* display: flex; */
-}
-.piece-box {
-  width: 50px;
-  height: 50px;
-  box-sizing: border-box;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.piece {
-  width: 40px;
-  height: 45px;
-}
-.moveover {
-  background: #e6d127 !important;
-}
-.cursor {
-  cursor: pointer;
-}
-.piece-box-text {
-  /* display: none; */
-  position: absolute;
-  bottom: 1px;
-  right: 2px;
-  font-size: 8px;
-  opacity: 0.7;
-  font-family: Arial;
-}
-.black-box .piece-box-text {
-  color: #eeeed2;
-}
-.white-box .piece-box-text {
-  color: #769656;
-}
-
-/** ####################################### */
-
-.piece-box.white-box {
-  background: #eeeed2;
-}
-.piece-box.black-box {
-  background: #769656;
-}
-.piece-box.piece-selected {
-  background: #f6f669;
-  cursor: pointer;
-}
-.piece-box.piece-ready {
-  background: greenyellow;
-}
-.piece-box.piece-potential {
-  background: lightskyblue;
-  border: 0.1px solid rgb(24, 155, 236);
-}
-.piece-box.piece-not-allowed {
-  background: coral;
-}
-.piece-box.piece-pointer {
-  cursor: pointer;
-}
-
-/** #################################### */
-
-.chess-message .check-mate-message {
-  position: absolute;
-  width: 200px;
-  left: calc(-142px + 50vw);
-  top: calc(-10px + 50vh);
-  text-align: center;
-  padding: 10px 50px;
-}
-.chess-message .black-wins {
-  display: none;
-  background: black;
-  color: white;
-  box-shadow: 0 0 150px 75px white;
-}
-.chess-message .white-wins {
-  display: none;
-  background: white;
-  color: black;
-  box-shadow: 0 0 150px 75px black;
-}
-
-/** #################################### */
-
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
-  .chess-table {
-    height: 240px;
-    width: 240px;
-  }
-  .piece-box {
-    width: 30px;
-    height: 30px;
-  }
-  img.piece {
-    width: 25px;
-    height: 25px;
-  }
-  .chess-message .check-mate-message {
-    width: 150px;
-    top: calc(-15px + 50vh);
-    left: calc(-85px + 50vw);
-    font-size: 12px;
-    padding: 10px;
-  }
-}
-
-@media only screen and (min-device-width: 560px) and (max-device-width: 820px) and (-webkit-min-device-pixel-ratio: 2) {
-  body {
-    padding: 50px 0;
-  }
-  .chess-message .check-mate-message {
-    width: 175px;
-    top: calc(35px + 50vh);
-    left: calc(-127.5px + 50vw);
-    font-size: 14px;
-    padding: 10px 40px;
-  }
-}
+@import url("./assets/style.css");
 </style>
