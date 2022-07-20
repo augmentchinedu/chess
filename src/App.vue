@@ -586,7 +586,7 @@
         <div
           ref="h8"
           class="piece-box black-box"
-          @click="updateBoard('h8')"
+          @click="act('h8')"
           @mouseleave="deselect('h8')"
           @mouseover="select('h8')"
         >
@@ -602,55 +602,9 @@ import { useStore } from "./store";
 import { mapActions, mapStores } from "pinia";
 export default {
   name: "App",
-  data() {
-    return {
-      player: "black",
-    };
-  },
   methods: {
-    ...mapActions(useStore, ["updateBoard", "select", "deselect"]),
-    // deselect(id) {
-    //   let board = this.getBoard();
-    //   board[id].classList.remove("moveover");
-    // },
-    // select(id) {
-    //   let board = this.getBoard();
-    //   let pieces = [];
-    //   if (this.player == "white") {
-    //     this.mainStore.pieces.forEach((element) => {
-    //       if (element.color == "white") pieces.push(element.id);
-    //     });
-    //     let piece = pieces.find((element) => element == id);
-    //     if (piece) board[id].classList.add("moveover", "cursor");
-    //   } else {
-    //     this.mainStore.pieces.forEach((element) => {
-    //       if (element.color == "black") pieces.push(element.id);
-    //     });
-    //     let piece = pieces.find((element) => element == id);
-    //     if (piece) board[id].classList.add("moveover", "cursor");
-    //   }
-    // },
-    act(id) {
-      console.log(id);
-    },
-    // assignPieces(pieces) {
-    //   let board = this.getBoard();
-    //   pieces.forEach((element) => {
-    //     let img = document.createElement("img");
-    //     img.src = element.img;
-    //     img.width = "30";
-    //     let div = board[element.id];
-    //     div.appendChild(img);
-    //   });
-    // },
-    // getBoard() {
-    //   let board = {};
-    //   let refs = this.$refs;
-    //   let result = Object.keys(refs).map((key) => [key, refs[key]]);
-    //   result = result.filter((element) => element[0] != "app");
-    //   result.forEach((element) => (board[element[0]] = element[1]));
-    //   return board;
-    // },
+    ...mapActions(useStore, ["updateBoard", "select", "deselect", "act"]),
+    
   },
   computed: {
     ...mapStores(useStore),

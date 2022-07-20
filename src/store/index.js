@@ -1,7 +1,10 @@
 import { defineStore } from "pinia";
+import { Pawn, pieces } from "../content";
 
 export const useStore = defineStore("main", {
   state: () => ({
+    Pieces: pieces,
+    player: "black",
     board: {},
     pieces: [
       {
@@ -100,6 +103,8 @@ export const useStore = defineStore("main", {
         img: "./assets/img/WhiteRook.png",
         name: "Rook",
       },
+
+      new Pawn("a7", "black"),
       {
         id: "a7",
         color: "black",
@@ -197,8 +202,36 @@ export const useStore = defineStore("main", {
         name: "Pawn",
       },
     ],
+    white: { isCheckMate: false },
+    black: { isCheckMate: false },
+    inPlay: false,
   }),
   actions: {
+    act(id) {
+      console.log(id);
+      let color = this.getColor(id);
+      if (this.player == color) {
+        if (!this.inPlay) {
+          if (this[this.player].isCheckMate == false) {
+            this.lift(id);
+          } else {
+            let piece = this.pieces.find(
+              (piece) => piece.name == "King" && piece.id == id
+            );
+            if (piece) this.lift(id);
+          }
+        } else this.drop(id);
+      }
+    },
+    lift(id) {
+      let piece = this.pieces.find((piece) => piece.id === id);
+      console.log(piece.name, "lifted");
+    },
+    getColor(id) {
+      let piece = this.pieces.find((piece) => piece.id === id);
+      if (piece == undefined) return null;
+      else return piece.color;
+    },
     select(id) {
       let board = this.board;
       let pieces = [];
@@ -217,10 +250,8 @@ export const useStore = defineStore("main", {
       }
     },
     deselect(id) {
-      let board = this.board;
-      board[id].classList.remove("moveover");
+      this.board[id].classList.remove("moveover");
     },
-
     updateBoard() {
       let board = this.board;
       for (let key in board) {
@@ -238,6 +269,7 @@ export const useStore = defineStore("main", {
       });
     },
     createBoard(refs) {
+      console.log(this.Pieces);
       let result = Object.keys(refs).map((key) => [key, refs[key]]);
       result = result.filter((element) => element[0] != "app");
       result.forEach((element) => (this.board[element[0]] = element[1]));
