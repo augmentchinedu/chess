@@ -3,7 +3,7 @@ import { Pawn } from "../content";
 
 export const useStore = defineStore("main", {
   state: () => ({
-    player: "black",
+    player: "white",
     board: {},
     pieces: [
       {

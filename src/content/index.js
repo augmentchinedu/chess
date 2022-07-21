@@ -24,17 +24,17 @@ const Pawn = class {
 
     console.log(board);
     console.log(this.id);
+    console.log(number);
     console.log(moves);
-    console.log(letter);
 
     for (let i = 0; i <= moves; i++) {
       if (this.color == "white") {
         number = number + moves;
         let spot = letterRow[letter] + numberRow[number];
-        output.push(spot);
+        if (pieces.find((piece) => piece.id == spot)) output = [];
+        else output.push(spot)
         number = number - moves;
         if (moves == 1) {
-          console.log(pieces);
           let left = letter - 1;
           let right = letter + 1;
           left = letterRow[left] + numberRow[number + moves];
