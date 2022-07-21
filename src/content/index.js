@@ -11,12 +11,12 @@ const Pawn = class {
     } else return "./assets/img/WhitePawn.png";
   }
 
-  highlight(board) {
+  highlight(board, pieces) {
     let output = [];
     let numberRow = ["1", "2", "3", "4", "5", "6", "7", "8"];
     let letterRow = ["a", "b", "c", "d", "e", "f", "g", "h"];
-    let number = parseInt(this.id.split("")[1]) - 1;
     let alphabet = this.id.split("")[0];
+    let number = parseInt(this.id.split("")[1]) - 1;
     let letter = letterRow.findIndex((element) => element == alphabet);
     let moves;
     if (number == 1 || number == 6) moves = 2;
@@ -27,17 +27,33 @@ const Pawn = class {
     console.log(moves);
     console.log(letter);
 
-    for (let i = 0; i < moves; i++) {
+    for (let i = 0; i <= moves; i++) {
       if (this.color == "white") {
-        number++;
+        number = number + moves;
         let spot = letterRow[letter] + numberRow[number];
         output.push(spot);
+        number = number - moves;
+        if (moves == 1) {
+          console.log(pieces);
+          let left = letter - 1;
+          let right = letter + 1;
+          left = letterRow[left] + numberRow[number + moves];
+          right = letterRow[right] + numberRow[number + moves];
+          left = pieces.find((piece) => piece.id == left);
+          right = pieces.find((piece) => piece.id == right);
+          console.log(right, left);
+          if (right && right.color != this.color) output.push(right.id);
+          if (left && left.color != this.color) output.push(left.id);
+          console.log("checked adjacent rows");
+        }
       }
       if (this.color == "black") {
-        number--;
+        number = number - moves;
         let spot = letterRow[letter] + numberRow[number];
         output.push(spot);
+        number = number + moves;
       }
+      moves--;
     }
     console.log(output);
   }

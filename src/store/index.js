@@ -3,7 +3,7 @@ import { Pawn } from "../content";
 
 export const useStore = defineStore("main", {
   state: () => ({
-    player: "white",
+    player: "black",
     board: {},
     pieces: [
       {
@@ -102,16 +102,16 @@ export const useStore = defineStore("main", {
         img: "./assets/img/WhiteRook.png",
         name: "Rook",
       },
-      new Pawn("a7", "black"),
+      new Pawn("a6", "black"),
       new Pawn("b7", "black"),
       new Pawn("c7", "black"),
       new Pawn("d7", "black"),
       new Pawn("e7", "black"),
-      new Pawn("f7", "black"),
+      new Pawn("f3", "black"),
       new Pawn("g7", "black"),
       new Pawn("h7", "black"),
       new Pawn("a2", "white"),
-      new Pawn("b2", "white"),
+      new Pawn("b6", "white"),
       new Pawn("c2", "white"),
       new Pawn("d2", "white"),
       new Pawn("e2", "white"),
@@ -142,7 +142,7 @@ export const useStore = defineStore("main", {
     },
     lift(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
-      piece.highlight(this.board);
+      piece.highlight(this.board, this.pieces);
     },
     getColor(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
