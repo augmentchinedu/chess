@@ -1,10 +1,9 @@
 import { defineStore } from "pinia";
-import { Pawn, pieces } from "../content";
+import { Pawn } from "../content";
 
 export const useStore = defineStore("main", {
   state: () => ({
-    Pieces: pieces,
-    player: "black",
+    player: "white",
     board: {},
     pieces: [
       {
@@ -103,104 +102,22 @@ export const useStore = defineStore("main", {
         img: "./assets/img/WhiteRook.png",
         name: "Rook",
       },
-
       new Pawn("a7", "black"),
-      {
-        id: "a7",
-        color: "black",
-        img: "./assets/img/BlackPawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "b7",
-        color: "black",
-        img: "./assets/img/BlackPawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "c7",
-        color: "black",
-        img: "./assets/img/BlackPawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "d7",
-        color: "black",
-        img: "./assets/img/BlackPawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "e7",
-        color: "black",
-        img: "./assets/img/BlackPawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "f7",
-        color: "black",
-        img: "./assets/img/BlackPawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "g7",
-        color: "black",
-        img: "./assets/img/BlackPawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "h7",
-        color: "black",
-        img: "./assets/img/BlackPawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "a2",
-        color: "white",
-        img: "./assets/img/WhitePawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "b2",
-        color: "white",
-        img: "./assets/img/WhitePawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "c2",
-        color: "white",
-        img: "./assets/img/WhitePawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "d2",
-        color: "white",
-        img: "./assets/img/WhitePawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "e2",
-        color: "white",
-        img: "./assets/img/WhitePawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "f2",
-        color: "white",
-        img: "./assets/img/WhitePawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "g2",
-        color: "white",
-        img: "./assets/img/WhitePawn.png",
-        name: "Pawn",
-      },
-      {
-        id: "h2",
-        color: "white",
-        img: "./assets/img/WhitePawn.png",
-        name: "Pawn",
-      },
+      new Pawn("b7", "black"),
+      new Pawn("c7", "black"),
+      new Pawn("d7", "black"),
+      new Pawn("e7", "black"),
+      new Pawn("f7", "black"),
+      new Pawn("g7", "black"),
+      new Pawn("h7", "black"),
+      new Pawn("a2", "white"),
+      new Pawn("b2", "white"),
+      new Pawn("c2", "white"),
+      new Pawn("d2", "white"),
+      new Pawn("e2", "white"),
+      new Pawn("f2", "white"),
+      new Pawn("g2", "white"),
+      new Pawn("h3", "white"),
     ],
     white: { isCheckMate: false },
     black: { isCheckMate: false },
@@ -225,7 +142,7 @@ export const useStore = defineStore("main", {
     },
     lift(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
-      console.log(piece.name, "lifted");
+      piece.highlight(this.board);
     },
     getColor(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
@@ -269,7 +186,6 @@ export const useStore = defineStore("main", {
       });
     },
     createBoard(refs) {
-      console.log(this.Pieces);
       let result = Object.keys(refs).map((key) => [key, refs[key]]);
       result = result.filter((element) => element[0] != "app");
       result.forEach((element) => (this.board[element[0]] = element[1]));
