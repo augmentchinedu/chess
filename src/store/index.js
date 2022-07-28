@@ -3,7 +3,7 @@ import { Pawn } from "../content";
 
 export const useStore = defineStore("main", {
   state: () => ({
-    player: "white",
+    player: "black",
     board: {},
     pieces: [
       {
@@ -122,27 +122,53 @@ export const useStore = defineStore("main", {
     white: { isCheckMate: false },
     black: { isCheckMate: false },
     inPlay: false,
+    hints: [],
+    activePiece: null,
   }),
   actions: {
     act(id) {
-      console.log(id);
+      console.log(this.activePiece, id);
+      let result = this.hints.find((h) => h == id);
+      if (result != undefined) this.drop(id);
       let color = this.getColor(id);
       if (this.player == color) {
-        if (!this.inPlay) {
-          if (this[this.player].isCheckMate == false) {
+        if (this[this.player].isCheckMate == false) {
+          this.updateBoard();
+          if (this.activePiece != id) {
             this.lift(id);
           } else {
-            let piece = this.pieces.find(
-              (piece) => piece.name == "King" && piece.id == id
-            );
-            if (piece) this.lift(id);
+            this.activePiece = null;
           }
-        } else this.drop(id);
+        } else {
+          let piece = this.pieces.find(
+            (piece) => piece.name == "King" && piece.id == id
+          );
+          if (piece) this.lift(id);
+        }
+      }
+    },
+    drop(id) {
+      let piece = this.pieces.find((piece) => piece.id == this.activePiece);
+      console.log(piece.id + "to", id);
+      piece.move(this.board, id);
+      let pieceToDelete = this.pieces.find((piece) => piece.id == id);
+      if (pieceToDelete) {
+        console.log("delete piece", pieceToDelete);
+        let index = this.pieces.findIndex(
+          (piece) => piece.id == pieceToDelete.id
+        );
+        console.log(index + " name");
+        this.pieces=this.pieces.splice(index);
+        console.log(this.pieces);
+        this.updateBoard()
+      } else {
+        console.log("spot is not empty");
       }
     },
     lift(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
-      piece.highlight(this.board, this.pieces);
+      this.hints = piece.getMoves(this.board, this.pieces);
+      this.activePiece = id;
     },
     getColor(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
@@ -173,8 +199,12 @@ export const useStore = defineStore("main", {
       let board = this.board;
       for (let key in board) {
         let element = board[key];
+
         if (element.childNodes.length > 1) {
-          element.removeChild(element.childNodes[1]);
+          let children = element.childNodes.length;
+          for (let i = children; i > 0; i--) {
+            if (i != 1) element.removeChild(element.childNodes[i - 1]);
+          }
         }
       }
       this.pieces.forEach((element) => {
