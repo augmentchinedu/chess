@@ -124,46 +124,72 @@ export const useStore = defineStore("main", {
     inPlay: false,
     hints: [],
     activePiece: null,
+    selected: false,
   }),
   actions: {
     act(id) {
-      console.log(this.activePiece, id);
+      let color = this.getColor(id);
+      if (this.player == color) {
+        if (this[color].isCheckMate) this.hintKing(id);
+        else this.hint(id);
+      } else {
+        console.log(this.hints);
+        let spot = this.hints.find((h) => h == id);
+        if (spot != undefined) {
+          console.log("dropped");
+          this.shift(id);
+        } else console.log("Empty Spot");
+      }
+    },
+    hint(id) {
+      this.updateBoard();
+      let piece = this.pieces.find((piece) => piece.id === id);
+      this.hints = piece.getMoves(this.board, this.pieces);
+      this.activePiece = id;
+    },
+    shift(to) {
+      let pieceToDelete = this.pieces.find((piece) => piece.id == to);
+      if (pieceToDelete) {
+        let pieceToDeleteIndex = this.pieces.findIndex(
+          (piece) => piece.id == pieceToDelete.id
+        );
+        this.pieces = this.pieces.filter(
+          (el, ind) => pieceToDeleteIndex != ind
+        );
+      }
+      let piece = this.pieces.find((piece) => piece.id == this.activePiece);
+      piece.id = to;
+
+      this.switchPlayer();
+      this.updateBoard();
+    },
+    tact(id) {
       let result = this.hints.find((h) => h == id);
-      if (result != undefined) this.drop(id);
+      if (result != undefined) {
+        this.drop(id);
+        console.log("dropped");
+      }
+
       let color = this.getColor(id);
       if (this.player == color) {
         if (this[this.player].isCheckMate == false) {
+          console.log("updated");
           this.updateBoard();
           if (this.activePiece != id) {
             this.lift(id);
           } else {
             this.activePiece = null;
           }
-        } else {
-          let piece = this.pieces.find(
-            (piece) => piece.name == "King" && piece.id == id
-          );
-          if (piece) this.lift(id);
         }
       }
     },
-    drop(id) {
-      let piece = this.pieces.find((piece) => piece.id == this.activePiece);
-      console.log(piece.id + "to", id);
-      piece.move(this.board, id);
-      let pieceToDelete = this.pieces.find((piece) => piece.id == id);
-      if (pieceToDelete) {
-        console.log("delete piece", pieceToDelete);
-        let index = this.pieces.findIndex(
-          (piece) => piece.id == pieceToDelete.id
-        );
-        console.log(index + " name");
-        this.pieces=this.pieces.splice(index);
-        console.log(this.pieces);
-        this.updateBoard()
-      } else {
-        console.log("spot is not empty");
-      }
+    hintKing(id) {
+      console.log("Only King Can Hint");
+      let piece = this.pieces.find(
+        (piece) => piece.name == "King" && piece.id == id
+      );
+      console.log(piece);
+      if (piece) this.lift(id);
     },
     lift(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
@@ -219,6 +245,11 @@ export const useStore = defineStore("main", {
       let result = Object.keys(refs).map((key) => [key, refs[key]]);
       result = result.filter((element) => element[0] != "app");
       result.forEach((element) => (this.board[element[0]] = element[1]));
+    },
+    switchPlayer() {
+      if (this.player == "white") this.player = "black";
+      else if (this.player == "black") this.player = "white";
+      console.log("Turn Switched");
     },
   },
 });

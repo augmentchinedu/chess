@@ -54,9 +54,9 @@ const Pawn = class {
     }
     // console.log(output);
     this.highlight(board, output);
-    return output
+    return output;
   }
-  highlight (board, output) {
+  highlight(board, output) {
     output.forEach((element) => {
       for (let key in board) {
         if (key == element) {
@@ -68,8 +68,8 @@ const Pawn = class {
       }
     });
   }
-  move (board,to) {
-    console.log(to);
+  move(board, to) {
+    this.id = to;
   }
 };
 
