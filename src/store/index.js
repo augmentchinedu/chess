@@ -1,107 +1,26 @@
 import { defineStore } from "pinia";
-import { Pawn } from "../content";
-
+import { Pawn, Rook, Knight, Bishop, Queen, King } from "../content";
 export const useStore = defineStore("main", {
   state: () => ({
     player: "black",
     board: {},
     pieces: [
-      {
-        id: "a8",
-        color: "black",
-        img: "./assets/img/BlackRook.png",
-        name: "Rook",
-      },
-      {
-        id: "b8",
-        color: "black",
-        img: "./assets/img/BlackKnight.png",
-        name: "Knight",
-      },
-      {
-        id: "c8",
-        color: "black",
-        img: "./assets/img/BlackBishop.png",
-        name: "Bishop",
-      },
-      {
-        id: "d8",
-        color: "black",
-        img: "./assets/img/BlackQueen.png",
-        name: "Queen",
-      },
-      {
-        id: "e8",
-        color: "black",
-        img: "./assets/img/BlackKing.png",
-        name: "King",
-      },
-      {
-        id: "f8",
-        color: "black",
-        img: "./assets/img/BlackBishop.png",
-        name: "Bishop",
-      },
-      {
-        id: "g8",
-        color: "black",
-        img: "./assets/img/BlackKnight.png",
-        name: "Knight",
-      },
-      {
-        id: "h8",
-        color: "black",
-        img: "./assets/img/BlackRook.png",
-        name: "Rook",
-      },
-      {
-        id: "a1",
-        color: "white",
-        img: "./assets/img/WhiteRook.png",
-        name: "Rook",
-      },
-      {
-        id: "b1",
-        color: "white",
-        img: "./assets/img/WhiteKnight.png",
-        name: "Knight",
-      },
-      {
-        id: "c1",
-        color: "white",
-        img: "./assets/img/WhiteBishop.png",
-        name: "Bishop",
-      },
-      {
-        id: "d1",
-        color: "white",
-        img: "./assets/img/WhiteQueen.png",
-        name: "Queen",
-      },
-      {
-        id: "e1",
-        color: "white",
-        img: "./assets/img/WhiteKing.png",
-        name: "King",
-      },
-      {
-        id: "f1",
-        color: "white",
-        img: "./assets/img/WhiteBishop.png",
-        name: "Bishop",
-      },
-      {
-        id: "g1",
-        color: "white",
-        img: "./assets/img/WhiteKnight.png",
-        name: "Knight",
-      },
-      {
-        id: "h1",
-        color: "white",
-        img: "./assets/img/WhiteRook.png",
-        name: "Rook",
-      },
+      new Rook("a1", "white"),
+      new Rook("h1", "white"),
+      new Rook("a8", "black"),
+      new Rook("h8", "black"),
+      new Knight("b8", "black"),
+      new Knight("g8", "black"),
+      new Knight("b1", "white"),
+      new Knight("g1", "white"),
+      new Bishop("c8", "black"),
+      new Bishop("f8", "black"),
+      new Bishop("c1", "white"),
+      new Bishop("f1", "white"),
+      new Queen("d8", "black"),
+      new Queen("d1", "white"),
+      new King("e8", "black"),
+      new King("e1", "white"),
       new Pawn("a6", "black"),
       new Pawn("b7", "black"),
       new Pawn("c7", "black"),
@@ -133,12 +52,11 @@ export const useStore = defineStore("main", {
         if (this[color].isCheckMate) this.hintKing(id);
         else this.hint(id);
       } else {
+        let spot;
         console.log(this.hints);
-        let spot = this.hints.find((h) => h == id);
-        if (spot != undefined) {
-          console.log("dropped");
-          this.shift(id);
-        } else console.log("Empty Spot");
+        if (this.hints) spot = this.hints.find((h) => h == id);
+        if (spot != undefined) this.shift(id);
+        else console.log("Empty Spot");
       }
     },
     hint(id) {
@@ -147,7 +65,7 @@ export const useStore = defineStore("main", {
       this.hints = piece.getMoves(this.board, this.pieces);
       this.activePiece = id;
     },
-    shift(to) {
+    shift (to) {
       let pieceToDelete = this.pieces.find((piece) => piece.id == to);
       if (pieceToDelete) {
         let pieceToDeleteIndex = this.pieces.findIndex(
@@ -159,42 +77,16 @@ export const useStore = defineStore("main", {
       }
       let piece = this.pieces.find((piece) => piece.id == this.activePiece);
       piece.id = to;
-
+      this.hints = null;
       this.switchPlayer();
       this.updateBoard();
-    },
-    tact(id) {
-      let result = this.hints.find((h) => h == id);
-      if (result != undefined) {
-        this.drop(id);
-        console.log("dropped");
-      }
-
-      let color = this.getColor(id);
-      if (this.player == color) {
-        if (this[this.player].isCheckMate == false) {
-          console.log("updated");
-          this.updateBoard();
-          if (this.activePiece != id) {
-            this.lift(id);
-          } else {
-            this.activePiece = null;
-          }
-        }
-      }
     },
     hintKing(id) {
       console.log("Only King Can Hint");
       let piece = this.pieces.find(
         (piece) => piece.name == "King" && piece.id == id
       );
-      console.log(piece);
       if (piece) this.lift(id);
-    },
-    lift(id) {
-      let piece = this.pieces.find((piece) => piece.id === id);
-      this.hints = piece.getMoves(this.board, this.pieces);
-      this.activePiece = id;
     },
     getColor(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
@@ -249,7 +141,21 @@ export const useStore = defineStore("main", {
     switchPlayer() {
       if (this.player == "white") this.player = "black";
       else if (this.player == "black") this.player = "white";
-      console.log("Turn Switched");
+      this.checkMate(this.player);
+    },
+    checkMate(color) {
+      let hints = [];
+      let king = this.pieces.find(
+        (piece) => piece.name === "King" && piece.color === color
+      );
+      this.pieces.forEach((piece) => {
+        if (piece.color != color) hints.push(...piece.hint(this.pieces));
+      });
+      let check = hints.find((hint) => {
+        if (hint == king.id) return hint;
+      });
+      if (check) this[color].isCheckMate = true;
+      else this[color].isCheckMate = false;
     },
   },
 });
