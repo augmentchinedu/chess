@@ -277,7 +277,6 @@ const Rook = class {
         right.shift();
       }
     }
-    console.log(output);
     let hints = output;
     return hints;
   }
@@ -290,14 +289,104 @@ const Knight = class {
     this.img = this.getImage(color);
   }
   name = "Knight";
+
   getImage() {
     if (this.color == "black") {
       return "./assets/img/BlackKnight.png";
     } else return "./assets/img/WhiteKnight.png";
   }
 
-  hint() {
-    let hints = [this.id];
+  getMoves(board, pieces) {
+    let output = [];
+
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+
+    let v = [
+      letterRow[letter] + numberRow[number - 2],
+      letterRow[letter] + numberRow[number + 2],
+    ];
+
+    let h = [
+      letterRow[letter - 2] + numberRow[number],
+      letterRow[letter + 2] + numberRow[number],
+    ];
+
+    v.forEach((id) => {
+      let number = parseInt(id.split("")[1]) - 1;
+      let letter = letterRow.findIndex((element) => element == id.split("")[0]);
+      let left = letterRow[letter - 1] + numberRow[number];
+      let right = letterRow[letter + 1] + numberRow[number];
+      output.push(left, right);
+    });
+
+    h.forEach((id) => {
+      let number = parseInt(id.split("")[1]) - 1;
+      let letter = letterRow.findIndex((element) => element == id.split("")[0]);
+      let top = letterRow[letter] + numberRow[number - 1];
+      let bottom = letterRow[letter] + numberRow[number + 1];
+      output.push(top, bottom);
+    });
+
+    output = output.filter((spot) => {
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          return spot;
+        }
+      } else return spot;
+    });
+
+    highlight(board, output);
+    return output;
+  }
+
+  hint(pieces) {
+    let hints;
+    let output = [];
+
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+
+    let v = [
+      letterRow[letter] + numberRow[number - 2],
+      letterRow[letter] + numberRow[number + 2],
+    ];
+
+    let h = [
+      letterRow[letter - 2] + numberRow[number],
+      letterRow[letter + 2] + numberRow[number],
+    ];
+
+    v.forEach((id) => {
+      let number = parseInt(id.split("")[1]) - 1;
+      let letter = letterRow.findIndex((element) => element == id.split("")[0]);
+      let left = letterRow[letter - 1] + numberRow[number];
+      let right = letterRow[letter + 1] + numberRow[number];
+      output.push(left, right);
+    });
+
+    h.forEach((id) => {
+      let number = parseInt(id.split("")[1]) - 1;
+      let letter = letterRow.findIndex((element) => element == id.split("")[0]);
+      let top = letterRow[letter] + numberRow[number - 1];
+      let bottom = letterRow[letter] + numberRow[number + 1];
+      output.push(top, bottom);
+    });
+
+    output = output.filter((spot) => {
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          return spot;
+        }
+      } else return spot;
+    });
+    hints = output;
     return hints;
   }
 };
