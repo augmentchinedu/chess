@@ -5,7 +5,6 @@ const highlight = (board, output) => {
   output.forEach((element) => {
     for (let key in board) {
       if (key == element) {
-        console.log(board[key]);
         let hint = document.createElement("div");
         hint.classList.add("hint");
         board[key].appendChild(hint);
@@ -74,8 +73,6 @@ const Pawn = class {
     let moves;
     let output = [];
 
-    let numberRow = ["1", "2", "3", "4", "5", "6", "7", "8"];
-    let letterRow = ["a", "b", "c", "d", "e", "f", "g", "h"];
     let number = parseInt(this.id.split("")[1]) - 1;
     let letter = letterRow.findIndex(
       (element) => element == this.id.split("")[0]
@@ -132,17 +129,160 @@ const Rook = class {
   }
 
   getMoves(board, pieces) {
-    let output = ["b1", "e2", "e3", "e4", "e5"];
-    console.log(pieces);
+    let output = [];
+    let up = [],
+      down = [],
+      left = [],
+      right = [];
+
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+    numberRow.forEach((element, index) => {
+      if (number > index) up.push(letterRow[letter] + numberRow[index]);
+      if (number < index) down.push(letterRow[letter] + numberRow[index]);
+    });
+    letterRow.forEach((element, index) => {
+      if (letter > index) left.push(letterRow[index] + numberRow[number]);
+      if (letter < index) right.push(letterRow[index] + numberRow[number]);
+    });
+
+    while (up.length > 0) {
+      let spot = up[up.length - 1];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        up.length = 0;
+      } else {
+        output.push(spot);
+        up.length--;
+      }
+    }
+    while (down.length > 0) {
+      let spot = down[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        down.length = 0;
+      } else {
+        output.push(spot);
+        down.shift();
+      }
+    }
+    while (left.length > 0) {
+      let spot = left[left.length - 1];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        left.length = 0;
+      } else {
+        output.push(spot);
+        left.length--;
+      }
+    }
+    while (right.length) {
+      let spot = right[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        right.length = 0;
+      } else {
+        output.push(spot);
+        right.shift();
+      }
+    }
+    console.log(output);
     highlight(board, output);
     return output;
   }
 
-  hint() {
-    let hints = [this.id];
+  hint(pieces) {
+    let output = [];
+    let up = [],
+      down = [],
+      left = [],
+      right = [];
+
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+    numberRow.forEach((element, index) => {
+      if (number > index) up.push(letterRow[letter] + numberRow[index]);
+      if (number < index) down.push(letterRow[letter] + numberRow[index]);
+    });
+    letterRow.forEach((element, index) => {
+      if (letter > index) left.push(letterRow[index] + numberRow[number]);
+      if (letter < index) right.push(letterRow[index] + numberRow[number]);
+    });
+
+    while (up.length > 0) {
+      let spot = up[up.length - 1];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        up.length = 0;
+      } else {
+        output.push(spot);
+        up.length--;
+      }
+    }
+    while (down.length > 0) {
+      let spot = down[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        down.length = 0;
+      } else {
+        output.push(spot);
+        down.shift();
+      }
+    }
+    while (left.length > 0) {
+      let spot = left[left.length - 1];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        left.length = 0;
+      } else {
+        output.push(spot);
+        left.length--;
+      }
+    }
+    while (right.length) {
+      let spot = right[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        right.length = 0;
+      } else {
+        output.push(spot);
+        right.shift();
+      }
+    }
+    console.log(output);
+    let hints = output;
     return hints;
   }
 };
+
 const Knight = class {
   constructor(id, color) {
     this.id = id;

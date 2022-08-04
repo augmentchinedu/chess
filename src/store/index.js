@@ -6,8 +6,8 @@ export const useStore = defineStore("main", {
     board: {},
     pieces: [
       new Rook("a1", "white"),
-      new Rook("h1", "white"),
-      new Rook("a8", "black"),
+      new Rook("e4", "white"),
+      new Rook("d6", "black"),
       new Rook("h8", "black"),
       new Knight("b8", "black"),
       new Knight("g8", "black"),
@@ -26,15 +26,15 @@ export const useStore = defineStore("main", {
       new Pawn("c7", "black"),
       new Pawn("d7", "black"),
       new Pawn("e7", "black"),
-      new Pawn("f3", "black"),
+      new Pawn("e2", "black"),
       new Pawn("g7", "black"),
       new Pawn("h7", "black"),
       new Pawn("a2", "white"),
       new Pawn("b6", "white"),
       new Pawn("c2", "white"),
       new Pawn("d2", "white"),
-      new Pawn("e2", "white"),
       new Pawn("f2", "white"),
+      new Pawn("d4", "white"),
       new Pawn("g2", "white"),
       new Pawn("h3", "white"),
     ],
@@ -53,7 +53,6 @@ export const useStore = defineStore("main", {
         else this.hint(id);
       } else {
         let spot;
-        console.log(this.hints);
         if (this.hints) spot = this.hints.find((h) => h == id);
         if (spot != undefined) this.shift(id);
         else console.log("Empty Spot");
