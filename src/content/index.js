@@ -264,7 +264,7 @@ const Rook = class {
         left.length--;
       }
     }
-    while (right.length) {
+    while (right.length > 0) {
       let spot = right[0];
       let piece = pieces.find((piece) => piece.id == spot);
       if (piece) {
@@ -403,8 +403,168 @@ const Bishop = class {
     } else return "./assets/img/WhiteBishop.png";
   }
 
-  hint() {
-    let hints = [this.id];
+  getMoves(board, pieces) {
+    let output = [];
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+
+    let northEast = [],
+      northWest = [],
+      southEast = [],
+      southWest = [];
+    for (let i = 1; i < 8; i++) {
+      let ne = letterRow[letter - i] + numberRow[number - i];
+      let se = letterRow[letter - i] + numberRow[number + i];
+      let nw = letterRow[letter + i] + numberRow[number - i];
+      let sw = letterRow[letter + i] + numberRow[number + i];
+      if (ne.length == 2)
+        northEast.push(letterRow[letter - i] + numberRow[number - i]);
+      if (se.length == 2)
+        southEast.push(letterRow[letter - i] + numberRow[number + i]);
+      if (nw.length == 2)
+        northWest.push(letterRow[letter + i] + numberRow[number - i]);
+      if (sw.length == 2)
+        southWest.push(letterRow[letter + i] + numberRow[number + i]);
+    }
+    while (northEast.length > 0) {
+      let spot = northEast[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        northEast.length = 0;
+      } else {
+        output.push(spot);
+        northEast.shift();
+      }
+    }
+    while (northWest.length > 0) {
+      let spot = northWest[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        northWest.length = 0;
+      } else {
+        output.push(spot);
+        northWest.shift();
+      }
+    }
+    while (southEast.length > 0) {
+      let spot = southEast[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        southEast.length = 0;
+      } else {
+        output.push(spot);
+        southEast.shift();
+      }
+    }
+    while (southWest.length > 0) {
+      let spot = southWest[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        southWest.length = 0;
+      } else {
+        output.push(spot);
+        southWest.shift();
+      }
+    }
+
+    highlight(board, output);
+    return output;
+  }
+  hint(pieces) {
+    let hints;
+    let output = [];
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+
+    let northEast = [],
+      northWest = [],
+      southEast = [],
+      southWest = [];
+    for (let i = 1; i < 8; i++) {
+      let ne = letterRow[letter - i] + numberRow[number - i];
+      let se = letterRow[letter - i] + numberRow[number + i];
+      let nw = letterRow[letter + i] + numberRow[number - i];
+      let sw = letterRow[letter + i] + numberRow[number + i];
+      if (ne.length == 2)
+        northEast.push(letterRow[letter - i] + numberRow[number - i]);
+      if (se.length == 2)
+        southEast.push(letterRow[letter - i] + numberRow[number + i]);
+      if (nw.length == 2)
+        northWest.push(letterRow[letter + i] + numberRow[number - i]);
+      if (sw.length == 2)
+        southWest.push(letterRow[letter + i] + numberRow[number + i]);
+    }
+    while (northEast.length > 0) {
+      let spot = northEast[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        northEast.length = 0;
+      } else {
+        output.push(spot);
+        northEast.shift();
+      }
+    }
+    while (northWest.length > 0) {
+      let spot = northWest[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        northWest.length = 0;
+      } else {
+        output.push(spot);
+        northWest.shift();
+      }
+    }
+    while (southEast.length > 0) {
+      let spot = southEast[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        southEast.length = 0;
+      } else {
+        output.push(spot);
+        southEast.shift();
+      }
+    }
+    while (southWest.length > 0) {
+      let spot = southWest[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        southWest.length = 0;
+      } else {
+        output.push(spot);
+        southWest.shift();
+      }
+    }
+
+    hints = output;
+
     return hints;
   }
 };
@@ -421,6 +581,13 @@ const Queen = class {
     } else return "./assets/img/WhiteQueen.png";
   }
 
+  getMoves(board, pieces) {
+    console.log(board, pieces);
+    let output = [];
+    output.push("e5");
+    highlight(board, output);
+    return output;
+  }
   hint() {
     let hints = [this.id];
     return hints;

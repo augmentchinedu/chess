@@ -40,7 +40,6 @@ export const useStore = defineStore("main", {
     ],
     white: { isCheckMate: false },
     black: { isCheckMate: false },
-    inPlay: false,
     hints: [],
     activePiece: null,
     selected: false,
