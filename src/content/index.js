@@ -582,17 +582,314 @@ const Queen = class {
   }
 
   getMoves(board, pieces) {
-    console.log(board, pieces);
     let output = [];
-    output.push("e5");
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+
+    let top = [],
+      bottom = [],
+      left = [],
+      right = [],
+      northEast = [],
+      northWest = [],
+      southEast = [],
+      southWest = [];
+
+    for (let i = 1; i < 8; i++) {
+      let t = numberRow[number - i];
+      let b = numberRow[number + i];
+      let l = letterRow[letter - i];
+      let r = letterRow[letter + i];
+      let ne = letterRow[letter - i] + numberRow[number - i];
+      let se = letterRow[letter - i] + numberRow[number + i];
+      let nw = letterRow[letter + i] + numberRow[number - i];
+      let sw = letterRow[letter + i] + numberRow[number + i];
+      if (t) top.push(letterRow[letter] + t);
+      if (b) bottom.push(letterRow[letter] + b);
+      if (l) left.push(l + numberRow[number]);
+      if (r) right.push(r + numberRow[number]);
+      if (ne.length == 2)
+        northEast.push(letterRow[letter - i] + numberRow[number - i]);
+      if (se.length == 2)
+        southEast.push(letterRow[letter - i] + numberRow[number + i]);
+      if (nw.length == 2)
+        northWest.push(letterRow[letter + i] + numberRow[number - i]);
+      if (sw.length == 2)
+        southWest.push(letterRow[letter + i] + numberRow[number + i]);
+    }
+
+    while (northEast.length > 0) {
+      let spot = northEast[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        northEast.length = 0;
+      } else {
+        output.push(spot);
+        northEast.shift();
+      }
+    }
+
+    while (northWest.length > 0) {
+      let spot = northWest[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        northWest.length = 0;
+      } else {
+        output.push(spot);
+        northWest.shift();
+      }
+    }
+
+    while (southEast.length > 0) {
+      let spot = southEast[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        southEast.length = 0;
+      } else {
+        output.push(spot);
+        southEast.shift();
+      }
+    }
+
+    while (southWest.length > 0) {
+      let spot = southWest[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        southWest.length = 0;
+      } else {
+        output.push(spot);
+        southWest.shift();
+      }
+    }
+    while (top.length > 0) {
+      let spot = top[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        top.length = 0;
+      } else {
+        output.push(spot);
+        top.shift();
+      }
+    }
+
+    while (bottom.length > 0) {
+      let spot = bottom[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        bottom.length = 0;
+      } else {
+        output.push(spot);
+        bottom.shift();
+      }
+    }
+
+    while (left.length > 0) {
+      let spot = left[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        left.length = 0;
+      } else {
+        output.push(spot);
+        left.shift();
+      }
+    }
+    while (right.length > 0) {
+      let spot = right[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        right.length = 0;
+      } else {
+        output.push(spot);
+        right.shift();
+      }
+    }
+
     highlight(board, output);
     return output;
   }
-  hint() {
-    let hints = [this.id];
+
+  hint(pieces) {
+    let hints;
+    let output = [];
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+
+    let top = [],
+      bottom = [],
+      left = [],
+      right = [],
+      northEast = [],
+      northWest = [],
+      southEast = [],
+      southWest = [];
+
+    for (let i = 1; i < 8; i++) {
+      let t = numberRow[number - i];
+      let b = numberRow[number + i];
+      let l = letterRow[letter - i];
+      let r = letterRow[letter + i];
+      let ne = letterRow[letter - i] + numberRow[number - i];
+      let se = letterRow[letter - i] + numberRow[number + i];
+      let nw = letterRow[letter + i] + numberRow[number - i];
+      let sw = letterRow[letter + i] + numberRow[number + i];
+      if (t) top.push(letterRow[letter] + t);
+      if (b) bottom.push(letterRow[letter] + b);
+      if (l) left.push(l + numberRow[number]);
+      if (r) right.push(r + numberRow[number]);
+      if (ne.length == 2)
+        northEast.push(letterRow[letter - i] + numberRow[number - i]);
+      if (se.length == 2)
+        southEast.push(letterRow[letter - i] + numberRow[number + i]);
+      if (nw.length == 2)
+        northWest.push(letterRow[letter + i] + numberRow[number - i]);
+      if (sw.length == 2)
+        southWest.push(letterRow[letter + i] + numberRow[number + i]);
+    }
+
+    while (northEast.length > 0) {
+      let spot = northEast[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        northEast.length = 0;
+      } else {
+        output.push(spot);
+        northEast.shift();
+      }
+    }
+
+    while (northWest.length > 0) {
+      let spot = northWest[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        northWest.length = 0;
+      } else {
+        output.push(spot);
+        northWest.shift();
+      }
+    }
+
+    while (southEast.length > 0) {
+      let spot = southEast[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        southEast.length = 0;
+      } else {
+        output.push(spot);
+        southEast.shift();
+      }
+    }
+
+    while (southWest.length > 0) {
+      let spot = southWest[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        southWest.length = 0;
+      } else {
+        output.push(spot);
+        southWest.shift();
+      }
+    }
+    while (top.length > 0) {
+      let spot = top[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        top.length = 0;
+      } else {
+        output.push(spot);
+        top.shift();
+      }
+    }
+
+    while (bottom.length > 0) {
+      let spot = bottom[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        bottom.length = 0;
+      } else {
+        output.push(spot);
+        bottom.shift();
+      }
+    }
+
+    while (left.length > 0) {
+      let spot = left[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        left.length = 0;
+      } else {
+        output.push(spot);
+        left.shift();
+      }
+    }
+    while (right.length > 0) {
+      let spot = right[0];
+      let piece = pieces.find((piece) => piece.id == spot);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+        right.length = 0;
+      } else {
+        output.push(spot);
+        right.shift();
+      }
+    }
+
+    hints = output;
+
     return hints;
   }
 };
+
 const King = class {
   constructor(id, color) {
     this.id = id;
@@ -606,8 +903,64 @@ const King = class {
     } else return "./assets/img/WhiteKing.png";
   }
 
-  hint() {
-    let hints = [this.id];
+  getMoves(board, pieces) {
+    let output = [];
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+
+    let n = letterRow[letter] + numberRow[number - 1];
+    let s = letterRow[letter] + numberRow[number + 1];
+    let e = letterRow[letter - 1] + numberRow[number];
+    let w = letterRow[letter + 1] + numberRow[number];
+    let ne = letterRow[letter - 1] + numberRow[number - 1];
+    let nw = letterRow[letter + 1] + numberRow[number - 1];
+    let se = letterRow[letter - 1] + numberRow[number + 1];
+    let sw = letterRow[letter + 1] + numberRow[number + 1];
+    let angles = [n, s, e, w, ne, nw, se, sw];
+    angles.forEach((spot) => {
+      let piece = pieces.find((piece) => piece.id == spot);
+      console.log(spot, piece);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+      } else output.push(spot);
+    });
+
+    highlight(board, output);
+    return output;
+  }
+
+  hint(pieces) {
+    let hints;
+    let output = [];
+    let number = parseInt(this.id.split("")[1]) - 1;
+    let letter = letterRow.findIndex(
+      (element) => element == this.id.split("")[0]
+    );
+
+    let n = letterRow[letter] + numberRow[number - 1];
+    let s = letterRow[letter] + numberRow[number + 1];
+    let e = letterRow[letter - 1] + numberRow[number];
+    let w = letterRow[letter + 1] + numberRow[number];
+    let ne = letterRow[letter - 1] + numberRow[number - 1];
+    let nw = letterRow[letter + 1] + numberRow[number - 1];
+    let se = letterRow[letter - 1] + numberRow[number + 1];
+    let sw = letterRow[letter + 1] + numberRow[number + 1];
+    let angles = [n, s, e, w, ne, nw, se, sw];
+    angles.forEach((spot) => {
+      let piece = pieces.find((piece) => piece.id == spot);
+      console.log(spot, piece);
+      if (piece) {
+        if (piece.color != this.color) {
+          output.push(spot);
+        }
+      } else output.push(spot);
+    });
+
+    hints = output;
     return hints;
   }
 };

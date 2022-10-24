@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { Pawn, Rook, Knight, Bishop, Queen, King } from "../content";
 export const useStore = defineStore("main", {
   state: () => ({
-    player: "black",
+    player: "white",
     board: {},
     pieces: [
       new Rook("a1", "white"),
@@ -14,8 +14,8 @@ export const useStore = defineStore("main", {
       new Knight("b1", "white"),
       new Knight("g1", "white"),
       new Bishop("c8", "black"),
-      new Bishop("e5", "black"),
-      new Bishop("c5", "white"),
+      new Bishop("f8", "black"),
+      new Bishop("c1", "white"),
       new Bishop("f1", "white"),
       new Queen("d8", "black"),
       new Queen("d1", "white"),
@@ -63,7 +63,7 @@ export const useStore = defineStore("main", {
       this.hints = piece.getMoves(this.board, this.pieces);
       this.activePiece = id;
     },
-    shift (to) {
+    shift(to) {
       let pieceToDelete = this.pieces.find((piece) => piece.id == to);
       if (pieceToDelete) {
         let pieceToDeleteIndex = this.pieces.findIndex(
@@ -81,10 +81,14 @@ export const useStore = defineStore("main", {
     },
     hintKing(id) {
       console.log("Only King Can Hint");
+      this.updateBoard();
       let piece = this.pieces.find(
         (piece) => piece.name == "King" && piece.id == id
       );
-      if (piece) this.lift(id);
+      if (piece) {
+        this.hints = piece.getMoves(this.board, this.pieces);
+        this.activePiece = id;
+      }
     },
     getColor(id) {
       let piece = this.pieces.find((piece) => piece.id === id);
